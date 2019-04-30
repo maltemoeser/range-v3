@@ -272,12 +272,12 @@ namespace ranges
             constexpr stride_view(Rng rng, range_difference_type_t<Rng> const stride)
               : detail::stride_view_base<Rng>{std::move(rng), stride}
             {}
-            CONCEPT_REQUIRES(SizedRange<Rng>())
+            CONCEPT_REQUIRES(Sized<Rng>() && SizedRange<Rng>())
             RANGES_CXX14_CONSTEXPR range_size_type_t<Rng> size()
             {
                 return size_(ranges::size(this->base()));
             }
-            CONCEPT_REQUIRES(SizedRange<Rng const>())
+            CONCEPT_REQUIRES(Sized<Rng const>() && Range<Rng>())
             constexpr range_size_type_t<Rng> size() const
             {
                 return size_(ranges::size(this->base()));

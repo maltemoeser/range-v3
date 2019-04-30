@@ -199,6 +199,19 @@ namespace ranges
                     ));
             };
 
+            struct Sized
+            {
+                template<typename T>
+                using size_t = decltype(size(std::declval<T&>()));
+
+                template<typename T>
+                auto requires_(T &t) -> decltype(
+                    concepts::valid_expr(
+                        concepts::is_false(disable_sized_range<uncvref_t<T>>()),
+                        concepts::model_of<Integral>(size(t))
+                    ));
+            };
+
             ///
             /// View concepts below
             ///
@@ -273,6 +286,9 @@ namespace ranges
 
         template<typename T>
         using SizedRange = concepts::models<concepts::SizedRange, T>;
+
+        template<typename T>
+        using Sized = concepts::models<concepts::Sized, T>;
 
         template<typename T>
         using View = concepts::models<concepts::View, T>;

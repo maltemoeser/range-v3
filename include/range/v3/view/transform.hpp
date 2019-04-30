@@ -123,7 +123,7 @@ namespace ranges
               : iter_transform_view::view_adaptor{std::move(rng)}
               , fun_(std::move(fun))
             {}
-            CONCEPT_REQUIRES(SizedRange<Rng const>())
+            CONCEPT_REQUIRES(Range<Rng>() && Sized<Rng const>())
             constexpr range_size_type_t<Rng> size() const
             {
                 return ranges::size(this->base());
