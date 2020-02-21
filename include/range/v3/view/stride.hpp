@@ -275,7 +275,7 @@ namespace ranges
           : detail::stride_view_base<Rng>{std::move(rng), stride}
         {}
         CPP_member
-        constexpr auto CPP_fun(size)()(requires sized_range<Rng>)
+        constexpr auto CPP_fun(size)()(requires sized<Rng> && sized_range<Rng>)
         {
             using size_type = range_size_t<Rng>;
             auto const n = ranges::size(this->base());
@@ -283,7 +283,7 @@ namespace ranges
                    static_cast<size_type>(this->stride_);
         }
         CPP_member
-        constexpr auto CPP_fun(size)()(const requires sized_range<Rng const>)
+        constexpr auto CPP_fun(size)()(const requires sized<Rng const> && range<Rng>)
         {
             using size_type = range_size_t<Rng const>;
             auto const n = ranges::size(this->base());

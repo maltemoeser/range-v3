@@ -172,6 +172,11 @@ namespace ranges
     );
 
     template<typename T>
+    CPP_concept_fragment(sized_, (T),
+        detail::integer_like_<range_size_t<T>>
+    );
+
+    template<typename T>
     CPP_concept_bool sized_range =
         range<T> &&
         !disable_sized_range<uncvref_t<T>> &&
@@ -180,6 +185,15 @@ namespace ranges
             ranges::size(t)
         ) &&
         CPP_fragment(ranges::sized_range_, T);
+
+    template<typename T>
+    CPP_concept_bool sized =
+        !disable_sized_range<uncvref_t<T>> &&
+        CPP_requires ((T &) t) //
+        (
+            ranges::size(t)
+        ) &&
+        CPP_fragment(ranges::sized_, T);
     // clang-format on
 
     /// \cond
